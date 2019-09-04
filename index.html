@@ -13,6 +13,9 @@
 </body>
 <script>
    const diagrama = {
+      versao: "1.0",
+      email: "arthurcarvalho24@gmail.com",
+      nome:"diagrama teste",
       id: "f1502a29-e779-41fb-9185-1b3237014452",
       offsetX: 0,
       offsetY: 0,
@@ -202,6 +205,28 @@
          color: "#c0ff00"
       }]
    }
+
+   const diagramaProcesso = {
+      codigo: diagrama.id,
+      versao: diagrama.versao || "1.0",
+      nome: diagrama.nome,
+      criador: diagrama.email,
+      data: diagrama.data || new Date(),
+      tipo: diagrama.tipo || "aplicacao",
+      atributosBase: [
+         diagrama.nodes.map(i => {
+            return {
+               codigo: i.code || "APA",
+               tipo: i.type,
+               mascara: "",
+               nulo: false,
+               unico: false
+            }
+         })
+      ]
+
+   }
+   console.log(diagramaProcesso.atributosBase)
 </script>
 
 </html>

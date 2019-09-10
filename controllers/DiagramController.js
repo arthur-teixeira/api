@@ -1,4 +1,5 @@
 const fetch = require("node-fetch");
+const objectConveter = require("../helpers/objectConverter");
 
 
 const handleRequests = async (rota, options = {}) => {
@@ -39,7 +40,7 @@ module.exports = {
 
    inserir: async (req, res, next) => {
       try {
-         const body = req.body.body
+         const body = objectConveter(req.body)
          const data = await handleRequests("processo/inserir", { method: "POST", body });
          checkData(data, res, "nenhum diagrama encontrado")
       } catch (error) {

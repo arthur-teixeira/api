@@ -81,8 +81,6 @@ module.exports = diagrama => {
                     tipo: i.type == "default" ? "padrao" : i.type,
                     x: i.x,
                     y: i.y,
-                    rotuloX: "nao sei ainda",
-                    rotuloY: "nao sei ainda",
                     rotulo: i.name,
                     rotuloVisivel: i.visibility || true,
                     padrao: {},
@@ -94,8 +92,8 @@ module.exports = diagrama => {
               diagrama.links.map(i => {
                  return {
                     codigo: i.id,
-                    tipo: "nao sei ainda",
-                    tipoModelo: "nao sei ainda",
+                    tipo: "",
+                    tipoModelo: "",
                     elementoInicial: i.source,
                     elementoFinal: i.target
                  }

@@ -73,7 +73,7 @@ module.exports = {
          const id = req.params.id
          const data = await handleRequests("gerador/inserir", { method: "PUT", body: { processoID: id } })
       } catch (error) {
-
+         next(error)
       }
    }
 

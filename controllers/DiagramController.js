@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-const objectConveter = require("../helpers/objectConverter");
+const objectConverter = require("../helpers/objectConverter");
 
 
 const handleRequests = async (rota, options = {}) => {
@@ -40,7 +40,7 @@ module.exports = {
 
    inserir: async (req, res, next) => {
       try {
-         const body = objectConveter(req.body)
+         const body = objectConverter(req.body)
          const data = await handleRequests("processo/inserir", { method: "POST", body });
          checkData(data, res, "nenhum diagrama encontrado")
       } catch (error) {
@@ -50,7 +50,8 @@ module.exports = {
 
    atualizar: async (req, res, next) => {
       try {
-         const { id, body } = req.params
+         const { id } = req.params
+         const body = req.body.data
          const data = await handleRequests(`processo/atualizar/${id}`, { method: "PUT", body })
          checkData(data, res, "nao foi possível atualizar o diagrama")
       } catch (error) {

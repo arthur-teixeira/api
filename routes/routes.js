@@ -7,4 +7,6 @@ router.get("/buscar/:id", controller.buscar)
 
 router.post("/inserir", controller.inserir)
 
+router.put("/atualizar/:id", controller.atualizar)
+
 module.exports = router

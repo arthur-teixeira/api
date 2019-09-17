@@ -39,12 +39,17 @@ module.exports = {
    },
 
    inserir: async (req, res, next) => {
+      // try {
+      //    const convertedBody = objectConverter(req.body.data);
+      //    const data = await handleRequests("processo/inserir", { method: "POST", body: convertedBody });
+      //    checkData(data, res, "nenhum diagrama encontrado")
+      // } catch (error) {
+      //    next(error)
+      // }
       try {
-         const body = objectConverter(req.body.data);
-         const data = await handleRequests("processo/inserir", { method: "POST", body });
-         checkData(data, res, "nenhum diagrama encontrado")
+
       } catch (error) {
-         next(error)
+
       }
    },
 

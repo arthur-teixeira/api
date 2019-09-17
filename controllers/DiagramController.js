@@ -1,7 +1,6 @@
 const fetch = require("node-fetch");
 const objectConverter = require("../helpers/objectConverter");
 
-
 const handleRequests = async (rota, options = {}) => {
    const blob = await fetch(`${process.env.BASE_URL}/${rota}`, options);
    const data = await blob.json();
@@ -39,25 +38,32 @@ module.exports = {
    },
 
    inserir: async (req, res, next) => {
-      // try {
-      //    const convertedBody = objectConverter(req.body.data);
-      //    const data = await handleRequests("processo/inserir", { method: "POST", body: convertedBody });
-      //    checkData(data, res, "nenhum diagrama encontrado")
-      // } catch (error) {
-      //    next(error)
-      // }
       try {
-
+         const convertedBody = objectConverter(req.body.data);
+         const data = await handleRequests("processo/inserir", {
+            method: "POST",
+            body: {
+               nome: req.body.nome,
+               versao: req.body.versao,
+               usuarioId: req.body.user,
+               processo: convertedBody
+            }
+         });
+         checkData(data, res, "nenhum diagrama encontrado")
       } catch (error) {
-
+         next(error)
       }
    },
 
    atualizar: async (req, res, next) => {
       try {
          const { id } = req.params
-         const body = req.body.data
-         const data = await handleRequests(`processo/atualizar/${id}`, { method: "PUT", body })
+         const contentBody = req.body.data
+         const data = await handleRequests(`processo/atualizar/${id}`, {
+            method: "PUT", body: {
+               processo: contentBody
+            }
+         })
          checkData(data, res, "nao foi possível atualizar o diagrama")
       } catch (error) {
          next(error)

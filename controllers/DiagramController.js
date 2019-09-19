@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
 const objectConverter = require("../helpers/objectConverter");
+const Diagrama = require("../models/Diagrama")
 
 
 const handleRequests = async (rota, options = {}) => {
@@ -38,22 +39,34 @@ module.exports = {
       }
    },
 
-   inserir: async (req, res, next) => {
+   inserir: async (req,res,next) => {
       try {
-         const body = objectConverter(req.body.data);
-         const data = await handleRequests("processo/inserir", { method: "POST", body });
-         checkData(data, res, "nenhum diagrama encontrado")
+         const body = objectConverter(req.body.data)
+         const newDiagrama = new Diagrama({processo: JSON.stringify(body)})
+         await newDiagrama.save();
+         console.log("sucesso");
+         res.json({mensagem: "sucesso"})
       } catch (error) {
          next(error)
       }
    },
 
-   atualizar: async (req, res, next) => {
+   // atualizar: async (req, res, next) => {
+   //    try {
+   //       const { id } = req.params
+   //       const body = req.body.data
+   //       const data = await handleRequests(`processo/atualizar/${id}`, { method: "PUT", body })
+   //       checkData(data, res, "nao foi possível atualizar o diagrama")
+   //    } catch (error) {
+   //       next(error)
+   //    }
+   // },
+
+   atualizar: async (req,res,next) => {
       try {
-         const { id } = req.params
-         const body = req.body.data
-         const data = await handleRequests(`processo/atualizar/${id}`, { method: "PUT", body })
-         checkData(data, res, "nao foi possível atualizar o diagrama")
+         const {id} = req.params;
+         Diagrama.updateOne({_id:id}, {processo: req.body.data});
+         await Diagrama.save()
       } catch (error) {
          next(error)
       }
@@ -72,7 +85,7 @@ module.exports = {
    automatizar: async (req, res, next) => {
       try {
          const id = req.params.id
-         const data = await handleRequests("gerador/inserir", { method: "PUT", body: { processoID: id } })
+         const data = await handleRequests("gerador/inserir", { method: "POST", body: { processoID: id } })
       } catch (error) {
          next(error)
       }

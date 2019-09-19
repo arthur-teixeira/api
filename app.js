@@ -1,7 +1,12 @@
 const app = require("express")();
 const morgan = require("morgan");
 const cors = require("cors");
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose")
+
+mongoose.connect("mongodb+srv://developer:developer19@cluster0-b7fym.gcp.mongodb.net/alive?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology:true})
+   .then(() => console.log("mongo conectado"))
+   .catch(err => console.log(err));
 
 require("dotenv").config();
 app.use(bodyParser.json())

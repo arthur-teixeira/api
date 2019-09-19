@@ -2,7 +2,6 @@ const fetch = require("node-fetch");
 const objectConverter = require("../helpers/objectConverter");
 const Diagrama = require("../models/Diagrama")
 
-
 const handleRequests = async (rota, options = {}) => {
    const blob = await fetch(`${process.env.BASE_URL}/${rota}`, options);
    const data = await blob.json();
@@ -46,6 +45,7 @@ module.exports = {
          await newDiagrama.save();
          console.log("sucesso");
          res.json({mensagem: "sucesso"})
+
       } catch (error) {
          next(error)
       }

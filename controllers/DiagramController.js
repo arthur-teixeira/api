@@ -38,38 +38,31 @@ module.exports = {
       }
    },
 
-   inserir: async (req,res,next) => {
+   inserir: async (req, res, next) => {
       try {
          const body = objectConverter(req.body.data)
-         const newDiagrama = new Diagrama({processo: JSON.stringify(body)})
+         const newDiagrama = new Diagrama({ processo: JSON.stringify(body) })
          await newDiagrama.save();
          console.log("sucesso");
-         res.json({mensagem: "sucesso"})
+         res.json({ mensagem: "sucesso" })
 
       } catch (error) {
          next(error)
       }
    },
 
-   // atualizar: async (req, res, next) => {
-   //    try {
-   //       const { id } = req.params
-   //       const body = req.body.data
-   //       const data = await handleRequests(`processo/atualizar/${id}`, { method: "PUT", body })
-   //       checkData(data, res, "nao foi possível atualizar o diagrama")
-   //    } catch (error) {
-   //       next(error)
-   //    }
-   // },
-
-   atualizar: async (req,res,next) => {
+   atualizar: async (req, res, next) => {
+      const { id } = req.params;
+      let novoDiagrama;
+      req.query.update ? novoDiagrama = objectConverter(req.body.processo) : novoDiagrama = req.body.processo;
       try {
-         const {id} = req.params;
-         Diagrama.updateOne({_id:id}, {processo: req.body.data});
+         const diagram = Diagrama.findById(id);
+         diagram.processo = novoDiagrama
          await Diagrama.save()
       } catch (error) {
          next(error)
       }
+
    },
 
    remover: async (req, res, next) => {

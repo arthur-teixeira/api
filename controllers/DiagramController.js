@@ -40,12 +40,10 @@ module.exports = {
 
    inserir: async (req, res, next) => {
       try {
-         const body = objectConverter(req.body.data)
+         const body = objectConverter(req.body.data);
          const newDiagrama = new Diagrama({ processo: JSON.stringify(body) })
          await newDiagrama.save();
-         console.log("sucesso");
          res.json({ mensagem: "sucesso" })
-
       } catch (error) {
          next(error)
       }
@@ -54,7 +52,9 @@ module.exports = {
    atualizar: async (req, res, next) => {
       const { id } = req.params;
       let novoDiagrama;
-      req.query.update ? novoDiagrama = objectConverter(req.body.processo) : novoDiagrama = req.body.processo;
+      req.query.update ?
+      novoDiagrama = objectConverter(req.body.processo) :
+      novoDiagrama = req.body.data;
       try {
          const diagram = Diagrama.findById(id);
          diagram.processo = novoDiagrama

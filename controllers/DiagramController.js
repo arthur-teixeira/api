@@ -20,6 +20,7 @@ module.exports = {
       try {
          const data = await handleRequests("processo/listar")
          res.json(data)
+         console.log(data)
       } catch (error) {
          next(error)
       }
@@ -41,7 +42,7 @@ module.exports = {
    inserir: async (req, res, next) => {
       try {
          const body = objectConverter(req.body.data);
-         const newDiagrama = new Diagrama({ processo: JSON.stringify(body) })
+         const newDiagrama = new Diagrama({ processo: JSON.stringify(body), nome: req.body.nome })
          await newDiagrama.save();
          res.json({ mensagem: "sucesso" })
       } catch (error) {
@@ -53,8 +54,8 @@ module.exports = {
       const { id } = req.params;
       let novoDiagrama;
       req.query.update ?
-      novoDiagrama = objectConverter(req.body.processo) :
-      novoDiagrama = req.body.data;
+         novoDiagrama = objectConverter(req.body.processo) :
+         novoDiagrama = req.body.data;
       try {
          const diagram = Diagrama.findById(id);
          diagram.processo = novoDiagrama

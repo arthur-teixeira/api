@@ -9,7 +9,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.7.1",
     "node-fetch": "^2.6.0",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.4.0"
   },
   "scripts": {
     "start": "nodemon"
